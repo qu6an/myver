@@ -1,0 +1,2789 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | АВТОСЕРВИС ГОДА 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5B6BF0;
+            --primary-light: #7E8EF1;
+            --primary-dark: #4A55C4;
+            --accent: #FF5A7D;
+            --accent-light: #FF7E9A;
+            --background: #F5F7FD;
+            --card-bg: #FFFFFF;
+            --text-dark: #1A1D29;
+            --text-medium: #5A6072;
+            --text-light: #8E94A7;
+            --border: #E6E9F0;
+            --success: #2DD4A5;
+            --warning: #FFB74D;
+            --info: #42A5F5;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.1);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+            gap: 24px;
+        }
+
+        /* Сайдбар */
+        .sidebar {
+            width: 320px;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 24px 0;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .logo {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo-img {
+            width: 180px;
+            height: auto;
+            margin-bottom: 12px;
+        }
+
+        .logo span {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0 16px;
+            flex-grow: 1;
+        }
+
+        .nav-links li {
+            margin-bottom: 4px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: var(--text-medium);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a:hover {
+            background: rgba(91, 107, 240, 0.08);
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            background: rgba(91, 107, 240, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-links a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .nav-links i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Стили для заголовков навигации */
+        .nav-title {
+            padding: 16px 16px 8px;
+            color: var(--text-light);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+        }
+
+        .nav-title:first-child {
+            margin-top: 0;
+        }
+
+        /* Стили для подменю */
+        .has-submenu {
+            position: relative;
+        }
+
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(91, 107, 240, 0.03);
+            border-radius: var(--radius-md);
+            margin: 4px 0;
+        }
+
+        .has-submenu:hover .submenu {
+            max-height: 500px;
+        }
+
+        .submenu li {
+            margin: 0;
+        }
+
+        .submenu a {
+            padding: 10px 16px 10px 44px;
+            font-size: 0.9rem;
+            border-radius: 0;
+        }
+
+        .submenu a:hover {
+            background: rgba(91, 107, 240, 0.05);
+        }
+
+        .submenu a.active {
+            background: rgba(91, 107, 240, 0.08);
+            color: var(--primary);
+        }
+
+        /* Индикатор подменю */
+        .submenu-indicator {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .has-submenu:hover .submenu-indicator {
+            transform: rotate(90deg);
+            color: var(--primary);
+        }
+
+        .sidebar-footer {
+            padding: 20px 24px 0;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+
+        .partner-logo-sidebar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 16px;
+            background: rgba(91, 107, 240, 0.05);
+            border-radius: var(--radius-md);
+        }
+
+        .partner-logo-sidebar img {
+            width: 120px;
+            height: auto;
+            margin-bottom: 8px;
+        }
+
+        .partner-logo-sidebar span {
+            font-size: 0.8rem;
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+
+        /* Основной контент */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .header {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .page-title h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: var(--text-medium);
+            font-size: 1rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: rgba(45, 212, 165, 0.1);
+            color: var(--success);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .nomination-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: rgba(91, 107, 240, 0.1);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Карточки */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(91, 107, 240, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title i {
+            margin-right: 12px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn:focus, a:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(91, 107, 240, 0.3);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 90, 125, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-medium);
+        }
+
+        .btn-outline:hover {
+            background: rgba(91, 107, 240, 0.05);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Дашборд */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        /* Прогресс-трекер с датами */
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            z-index: 1;
+        }
+
+        .progress-tracker::after {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 0;
+            width: 60%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 3px;
+            z-index: 2;
+            transition: width 1s ease;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+            width: 100px;
+        }
+
+        .step-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 3px solid var(--border);
+            margin-bottom: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .step-icon.completed {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 6px 16px rgba(91, 107, 240, 0.3);
+        }
+
+        .step-icon.current {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 6px 16px rgba(255, 90, 125, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            text-align: center;
+            color: var(--text-medium);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .step-date {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Баллы и рейтинг */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(91, 107, 240, 0.05) 0%, rgba(255, 90, 125, 0.05) 100%);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(91, 107, 240, 0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+
+        /* Команда */
+        .team-members {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: rgba(91, 107, 240, 0.03);
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .team-member:hover {
+            background: rgba(91, 107, 240, 0.08);
+            transform: translateX(4px);
+            border-color: rgba(91, 107, 240, 0.1);
+        }
+
+        .member-role {
+            width: 120px;
+            font-weight: 600;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        .member-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .member-score {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .member-rank {
+            width: 100px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        /* Тестирование */
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .test-card {
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .test-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .test-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .test-card.active {
+            border-left-color: var(--accent);
+        }
+
+        .test-card.active::before {
+            background: var(--accent);
+        }
+
+        .test-card.completed {
+            border-left-color: var(--success);
+        }
+
+        .test-card.completed::before {
+            background: var(--success);
+        }
+
+        .test-card.upcoming {
+            border-left-color: var(--warning);
+        }
+
+        .test-card.upcoming::before {
+            background: var(--warning);
+        }
+
+        .test-status {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .status-active {
+            background: rgba(255, 90, 125, 0.1);
+            color: var(--accent);
+        }
+
+        .status-completed {
+            background: rgba(45, 212, 165, 0.1);
+            color: var(--success);
+        }
+
+        .status-upcoming {
+            background: rgba(255, 183, 77, 0.1);
+            color: var(--warning);
+        }
+
+        .test-progress {
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--border);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Рейтинги */
+        .ranking-filters {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: var(--text-medium);
+        }
+
+        .filter-btn:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(91, 107, 240, 0.3);
+        }
+
+        .filter-btn:hover:not(.active) {
+            background: rgba(91, 107, 240, 0.05);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ranking-table th {
+            text-align: left;
+            padding: 16px 20px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-medium);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .ranking-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .ranking-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .ranking-table tr:hover td {
+            background: rgba(91, 107, 240, 0.03);
+        }
+
+        .ranking-table tr.current-user {
+            background: rgba(91, 107, 240, 0.05);
+        }
+
+        .ranking-table tr.current-user:hover td {
+            background: rgba(91, 107, 240, 0.08);
+        }
+
+        .ranking-position {
+            font-weight: 700;
+            width: 60px;
+            color: var(--primary);
+        }
+
+        .ranking-progress {
+            width: 150px;
+        }
+
+        .progress-visual {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-visual-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* Обучение */
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .learning-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+        }
+
+        .learning-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .learning-icon {
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .learning-content {
+            padding: 24px;
+        }
+
+        .learning-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .learning-desc {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* Улучшенный блок воркшопа */
+        .workshop-card {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .workshop-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            align-items: start;
+        }
+        
+        .workshop-brand-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(91, 107, 240, 0.05) 0%, rgba(255, 90, 125, 0.05) 100%);
+            border-radius: var(--radius-lg);
+        }
+        
+        .workshop-brand-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 16px;
+        }
+        
+        .workshop-brand-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .workshop-content-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .workshop-topic {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--text-dark);
+        }
+        
+        .workshop-description {
+            color: var(--text-medium);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .workshop-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .workshop-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+        
+        .workshop-meta-item i {
+            color: var(--primary);
+            width: 20px;
+        }
+        
+        .workshop-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .workshop-actions .btn {
+            flex: 1;
+            justify-content: center;
+        }
+
+        /* Блок генерального партнера */
+        .partner-card {
+            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, rgba(91, 107, 240, 0.03) 0%, rgba(91, 107, 240, 0.08) 100%);
+        }
+        
+        .partner-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+        }
+        
+        .partner-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+        
+        .partner-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        
+        .partner-info p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Аттестация от производителей - улучшенный стиль */
+        .certification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .certification-card {
+            background: linear-gradient(135deg, rgba(91, 107, 240, 0.05) 0%, rgba(255, 90, 125, 0.05) 100%);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            min-height: 220px;
+        }
+        
+        .certification-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .certification-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .certification-card.pending {
+            border: 2px dashed var(--warning);
+            background: linear-gradient(135deg, rgba(255, 183, 77, 0.05) 0%, rgba(255, 183, 77, 0.1) 100%);
+        }
+        
+        .certification-card.pending::before {
+            background: var(--warning);
+        }
+        
+        .certification-card.completed {
+            border: 2px solid var(--success);
+            background: linear-gradient(135deg, rgba(45, 212, 165, 0.05) 0%, rgba(45, 212, 165, 0.1) 100%);
+        }
+        
+        .certification-card.completed::before {
+            background: var(--success);
+        }
+        
+        .certification-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .certification-logo {
+            max-width: 100%;
+            max-height: 70px;
+            width: auto;
+            height: auto;
+            margin-bottom: 16px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .certification-card:hover .certification-logo {
+            transform: scale(1.05);
+        }
+        
+        .certification-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .certification-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 12px;
+            gap: 6px;
+        }
+        
+        .status-pending {
+            background: rgba(255, 183, 77, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(255, 183, 77, 0.3);
+        }
+        
+        .status-completed {
+            background: rgba(45, 212, 165, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(45, 212, 165, 0.3);
+        }
+        
+        .certification-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+        
+        .badge-completed {
+            background: var(--success);
+            color: white;
+        }
+        
+        .badge-pending {
+            background: var(--warning);
+            color: white;
+        }
+
+        /* Футер */
+        .site-footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 40px 0 20px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .footer-column p {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-contact {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .footer-contact p {
+            margin-bottom: 8px;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .footer-logo {
+            width: 150px;
+            margin-bottom: 16px;
+        }
+
+        .conference-banner {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .conference-content {
+            padding: 32px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .conference-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+        }
+        
+        .conference-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .conference-date {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .conference-description {
+            margin-bottom: 24px;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        
+        .conference-features {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .conference-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .conference-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .conference-actions .btn {
+            background: white;
+            color: var(--text-dark);
+        }
+        
+        .conference-actions .btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        .invite-friend {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .invite-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .invite-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .invite-description {
+            margin-bottom: 24px;
+            opacity: 0.9;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .invite-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        
+        .invite-actions .btn {
+            background: white;
+            color: var(--primary);
+            min-width: 160px;
+        }
+        
+        .invite-actions .btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+
+        /* Блок призов */
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .prize-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+        
+        .prize-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .prize-header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+        }
+        
+        .prize-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        
+        .prize-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .prize-subtitle {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .prize-content {
+            padding: 20px;
+        }
+        
+        .prize-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .prize-description {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        
+        .prize-conditions {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+        
+        /* Блок механики баллов */
+        .scoring-system {
+            background: linear-gradient(135deg, rgba(91, 107, 240, 0.05) 0%, rgba(255, 90, 125, 0.05) 100%);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .scoring-system.expanded {
+            display: block;
+        }
+        
+        .scoring-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .scoring-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .scoring-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .step-description {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+        
+        .step-points {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        /* Блок добавления участника */
+        .add-member-card {
+            background: rgba(91, 107, 240, 0.05);
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .add-member-card:hover {
+            background: rgba(91, 107, 240, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .add-member-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        
+        .add-member-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        
+        .add-member-description {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: 16px;
+        }
+
+        /* Стили для викторины */
+        .quiz-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .quiz-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-icon {
+            font-size: 2.5rem;
+        }
+        
+        .quiz-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .quiz-description {
+            margin-bottom: 24px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .quiz-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        
+        .quiz-stat {
+            text-align: center;
+        }
+        
+        .quiz-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .quiz-stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        .quiz-actions .btn {
+            background: white;
+            color: var(--primary);
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .quiz-actions .btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .workshop-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .workshop-brand-section {
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .workshop-brand-logo {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 0;
+            }
+            
+            .prizes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .certification-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                margin-bottom: 20px;
+            }
+            
+            .nav-links {
+                display: flex;
+                overflow-x: auto;
+                padding: 0 10px;
+            }
+            
+            .nav-links li {
+                flex-shrink: 0;
+                margin-bottom: 0;
+            }
+            
+            .conference-actions, .invite-actions {
+                flex-direction: column;
+            }
+            
+            .conference-actions .btn, .invite-actions .btn {
+                width: 100%;
+            }
+            
+            .prizes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .certification-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            
+            .quiz-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tests-grid, .learning-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ranking-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .progress-tracker {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .progress-step {
+                width: 80px;
+            }
+            
+            .conference-features {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .header-badges {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                width: 100%;
+            }
+            
+            .certification-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            
+            .certification-logo {
+                max-height: 60px;
+            }
+            
+            .workshop-actions {
+                flex-direction: column;
+            }
+            
+            .partner-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 16px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .card-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .invite-actions {
+                flex-direction: column;
+            }
+            
+            .invite-actions .btn {
+                min-width: auto;
+            }
+            
+            .certification-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .workshop-brand-section {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-message">Действие выполнено успешно!</span>
+    </div>
+
+    <div class="container">
+        <!-- Сайдбар -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="https://autocom.parts/i/logo.svg" alt="АВТОКОМ" class="logo-img">
+                <span>Личный кабинет участника</span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-title">ГЛАВНАЯ</li>
+                <li><a href="#"><i class="fas fa-tachometer-alt"></i> ПАНЕЛЬ УПРАВЛЕНИЯ</a></li>
+
+                <li class="nav-title">ПРОЕКТЫ</li>
+                
+                <li class="has-submenu">
+                    <a href="#"><i class="fas fa-car"></i> EVERYCAR <span class="submenu-indicator">▶</span></a>
+                    <ul class="submenu">
+                        <li><a href="#">Соревнование</a></li>
+                        <li><a href="#">Розыгрыш билетов</a></li>
+                        <li><a href="#">Достижения</a></li>
+                        <li><a href="#">Статистика</a></li>
+                        <li><a href="#">Расчёт GRADE</a></li>
+                        <li><a href="#">Мой автосервис</a></li>
+                        <li><a href="#">Закупки</a></li>
+                    </ul>
+                </li>
+                
+                <li class="has-submenu">
+                    <a href="#"><i class="fas fa-puzzle-piece"></i> АВТОМОБИЛЬНАЯ ВИКТОРИНА <span class="submenu-indicator">▶</span></a>
+                    <ul class="submenu">
+                        <li><a href="#">Обзор</a></li>
+                        <li><a href="#">Розыгрыш билетов</a></li>
+                        <li><a href="#">Награды</a></li>
+                        <li><a href="#">Статистика</a></li>
+                        <li><a href="#">Мой автосервис</a></li>
+                    </ul>
+                </li>
+                
+                <li class="has-submenu">
+                    <a href="#" class="active"><i class="fas fa-trophy"></i> АВТОСЕРВИС ГОДА <span class="submenu-indicator">▶</span></a>
+                    <ul class="submenu">
+                        <li><a href="#" class="active">Мои задания</a></li>
+                        <li><a href="#">Этапы конкурса</a></li>
+                        <li><a href="#">Команда</a></li>
+                        <li><a href="#">Рейтинги</a></li>
+                        <li><a href="#">Призы и награды</a></li>
+                        <li><a href="#">Правила</a></li>
+                    </ul>
+                </li>
+                
+                <li class="has-submenu">
+                    <a href="#"><i class="fas fa-graduation-cap"></i> АКАДЕМИЯ СТО <span class="submenu-indicator">▶</span></a>
+                    <ul class="submenu">
+                        <li><a href="#">Тесты</a></li>
+                        <li><a href="#">Воркшопы</a></li>
+                        <li><a href="#">Курсы</a></li>
+                        <li><a href="#">Интенсивы</a></li>
+                        <li><a href="#">База знаний</a></li>
+                        <li><a href="#">Расписание</a></li>
+                        <li><a href="#">Отпуск за знаниями</a></li>
+                        <li><a href="#">Преподаватели</a></li>
+                    </ul>
+                </li>
+                
+                <li class="has-submenu">
+                    <a href="#"><i class="fas fa-award"></i> СЕРТИФИКАЦИЯ СТО <span class="submenu-indicator">▶</span></a>
+                    <ul class="submenu">
+                        <li><a href="#">Условия участия</a></li>
+                        <li><a href="#">Статус</a></li>
+                        <li><a href="#">Производители</a></li>
+                    </ul>
+                </li>
+                
+                <li class="has-submenu">
+                    <a href="#"><i class="fas fa-shopping-cart"></i> ИНТЕРНЕТ-МАГАЗИН <span class="submenu-indicator">▶</span></a>
+                    <ul class="submenu">
+                        <li><a href="#">Каталог</a></li>
+                        <li><a href="#">Корзина</a></li>
+                        <li><a href="#">Избранное</a></li>
+                        <li><a href="#">Покупки</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="#"><i class="fas fa-medal"></i> ЗАЛ СЛАВЫ</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> КАЛЕНДАРЬ</a></li>
+                
+                <li class="has-submenu">
+                    <a href="#"><i class="fas fa-gift"></i> БЕСПЛАТНО <span class="submenu-indicator">▶</span></a>
+                    <ul class="submenu">
+                        <li><a href="#">Бесплатные вебинары</a></li>
+                        <li><a href="#">Воркшопы</a></li>
+                        <li><a href="#">Чек-листы и шаблоны</a></li>
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="#">Кейсы автосервисов</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-title">ДОПОЛНИТЕЛЬНО</li>
+                <li><a href="#"><i class="fas fa-cog"></i> НАСТРОЙКИ</a></li>
+                
+                <li class="has-submenu">
+                    <a href="#"><i class="fas fa-question-circle"></i> ПОМОЩЬ <span class="submenu-indicator">▶</span></a>
+                    <ul class="submenu">
+                        <li><a href="#">О проекте</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="partner-logo-sidebar">
+                    <img src="https://autocom.parts/i/banners/everycar_partnrs/LYNX.svg" alt="LYNXauto">
+                    <span>Генеральный партнер</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="main-content">
+            <!-- Шапка с номинацией -->
+            <div class="header">
+                <div class="page-title">
+                    <h1>Добро пожаловать, Алексей!</h1>
+                    <p>Мониторинг вашего прогресса в конкурсе АВТОСЕРВИС ГОДА</p>
+                </div>
+                <div class="header-badges">
+                    <div class="status-badge">Активный участник</div>
+                    <div class="nomination-badge">
+                        <i class="fas fa-award"></i> Номинация: Лучший механик
+                    </div>
+                </div>
+            </div>
+
+            <!-- Дашборд -->
+            <div class="dashboard-grid">
+                <!-- Левая колонка -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Мои баллы -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fas fa-chart-bar"></i> Мои баллы</div>
+                            <div class="card-actions">
+                                <button class="btn btn-outline" id="showStats"><i class="fas fa-chart-pie"></i> Статистика</button>
+                            </div>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value">285</div>
+                                <div class="stat-label">Общий рейтинг</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">15</div>
+                                <div class="stat-label">Место в Москве</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">87</div>
+                                <div class="stat-label">Место в ЦФО</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Путь к победе с датами на прогресс-линии -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fas fa-route"></i> Ваш путь к победе</div>
+                            <div class="card-actions">
+                                <button class="btn btn-outline" id="toggleScoring"><i class="fas fa-info-circle"></i> Механика баллов</button>
+                                <button class="btn btn-outline" id="addToCalendar"><i class="fas fa-calendar"></i> Календарь</button>
+                            </div>
+                        </div>
+                        <div class="progress-tracker">
+                            <div class="progress-step">
+                                <div class="step-icon completed"><i class="fas fa-check"></i></div>
+                                <div class="step-label">Январь</div>
+                                <div class="step-date">Тесты 1-2</div>
+                            </div>
+                            <div class="progress-step">
+                                <div class="step-icon completed"><i class="fas fa-check"></i></div>
+                                <div class="step-label">Февраль</div>
+                                <div class="step-date">Тест 2</div>
+                            </div>
+                            <div class="progress-step">
+                                <div class="step-icon current"><i class="fas fa-play"></i></div>
+                                <div class="step-label">Март</div>
+                                <div class="step-date">Тесты 3-4</div>
+                            </div>
+                            <div class="progress-step">
+                                <div class="step-icon"><i class="fas fa-clock"></i></div>
+                                <div class="step-label">Апрель</div>
+                                <div class="step-date">22.04 - Регион. финал</div>
+                            </div>
+                            <div class="progress-step">
+                                <div class="step-icon"><i class="fas fa-flag"></i></div>
+                                <div class="step-label">Май</div>
+                                <div class="step-date">28.05 - Финал Москва</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Ближайшие дедлайны -->
+                        <div style="margin-top: 30px;">
+                            <div style="margin-bottom: 20px; padding: 20px; background: rgba(255, 90, 125, 0.05); border-radius: var(--radius-md); display: flex; align-items: center; border-left: 4px solid var(--accent);">
+                                <i class="fas fa-exclamation-triangle" style="color: var(--accent); margin-right: 16px; font-size: 1.5rem;"></i>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--accent);">До конца Теста 3: 2 дня 14 часов</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-medium); margin-top: 4px;">Максимум: 150 баллов</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" id="addAllToCalendar">
+                                <i class="fas fa-calendar-plus"></i> Добавить все события в календарь
+                            </button>
+                        </div>
+                        
+                        <!-- Скрытая механика начисления баллов -->
+                        <div class="scoring-system" id="scoringSystem">
+                            <div class="scoring-title">
+                                <i class="fas fa-calculator"></i> Механика начисления баллов
+                            </div>
+                            <div class="scoring-steps">
+                                <div class="scoring-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <div class="step-title">Отборочный тур: 4 теста</div>
+                                        <div class="step-description">Каждый тест до 150 баллов. Итого до 600 баллов</div>
+                                        <div class="step-points">+600 баллов максимум</div>
+                                    </div>
+                                </div>
+                                <div class="scoring-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <div class="step-title">Победа в городе/области</div>
+                                        <div class="step-description">По сумме баллов отборочного тура</div>
+                                        <div class="step-points">+150/100/50 баллов</div>
+                                    </div>
+                                </div>
+                                <div class="scoring-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <div class="step-title">Победа в регионе/финале</div>
+                                        <div class="step-description">Баллы предыдущих туров обнуляются! Все решается здесь и сейчас</div>
+                                        <div class="step-points">+150/100/50 баллов</div>
+                                    </div>
+                                </div>
+                                <div class="scoring-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <div class="step-title">Итого за этап</div>
+                                        <div class="step-description">Максимум можно набрать за все этапы</div>
+                                        <div class="step-points">1200 баллов</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Все тесты -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fas fa-tasks"></i> Все тесты</div>
+                            <div class="card-actions">
+                                <button class="btn btn-primary" id="refreshTests"><i class="fas fa-sync-alt"></i> Обновить</button>
+                            </div>
+                        </div>
+                        <div class="tests-grid">
+                            <div class="test-card active">
+                                <div class="test-status status-active">Активный</div>
+                                <h3>ТЕСТ 3 | 1-10 МАРТА</h3>
+                                <div class="test-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 30%"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>Прогресс: 45/150</span>
+                                        <span>Осталось: 2 дня 14 часов</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-accent" style="width: 100%;" id="continueTest">
+                                    <i class="fas fa-play"></i> Продолжить тест
+                                </button>
+                            </div>
+
+                            <div class="test-card completed">
+                                <div class="test-status status-completed">Завершен</div>
+                                <h3>ТЕСТ 2 | 14-28 ФЕВРАЛЯ</h3>
+                                <div class="test-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 90%"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>Набрано: 135/150 баллов</span>
+                                        <span>Завершено</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline" style="width: 100%;" id="analyzeTest">
+                                    <i class="fas fa-chart-bar"></i> Анализ ответов
+                                </button>
+                            </div>
+
+                            <div class="test-card upcoming">
+                                <div class="test-status status-upcoming">Скоро</div>
+                                <h3>ТЕСТ 4 | 10-23 МАРТА</h3>
+                                <div class="test-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 0%"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>Доступно через: 7 дней</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline" style="width: 100%;" id="remindTest">
+                                    <i class="fas fa-bell"></i> Напомнить мне
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Команда автосервиса -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fas fa-users"></i> Команда Автосервиса "Вилгуд"</div>
+                            <div class="card-actions">
+                                <button class="btn btn-outline" id="teamDetails"><i class="fas fa-eye"></i> Подробнее</button>
+                            </div>
+                        </div>
+                        <div class="team-members">
+                            <div class="team-member">
+                                <div class="member-role">Руководитель</div>
+                                <div class="member-name">█████</div>
+                                <div class="member-score">320 баллов</div>
+                                <div class="member-rank">Топ-5 в Москве</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-role">Мастер-консультант</div>
+                                <div class="member-name">█████</div>
+                                <div class="member-score">275 баллов</div>
+                                <div class="member-rank">Топ-15 в Москве</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-role">Механик</div>
+                                <div class="member-name">Алексей Волков (Вы)</div>
+                                <div class="member-score">285 баллов</div>
+                                <div class="member-rank">Топ-15 в Москве</div>
+                            </div>
+                            
+                            <!-- Блок добавления участника -->
+                            <div class="add-member-card" id="addMemberCard">
+                                <div class="add-member-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="add-member-title">Добавить участника в команду</div>
+                                <div class="add-member-description">
+                                    Для участия в командном зачете необходимы все три роли: Руководитель, Мастер-консультант и Механик
+                                </div>
+                                <button class="btn btn-primary" id="inviteMember">
+                                    <i class="fas fa-plus"></i> Пригласить участника
+                                </button>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; padding: 20px; background: linear-gradient(135deg, rgba(91, 107, 240, 0.1) 0%, rgba(255, 90, 125, 0.1) 100%); border-radius: var(--radius-md);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--primary);">КОМАНДНЫЙ ЗАЧЕТ</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">880 баллов</div>
+                                    <div style="font-size: 0.85rem; color: var(--text-medium); margin-top: 4px;">Сумма лучших баллов по ролям</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-weight: 600; color: var(--accent);">Место в Москве</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">3 🏆</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правая колонка -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Генеральный партнер -->
+                    <div class="card partner-card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fas fa-handshake"></i> Генеральный партнер</div>
+                        </div>
+                        <div class="partner-content">
+                            <img src="https://autocom.parts/i/banners/everycar_partnrs/LYNX.svg" alt="LYNXauto" class="partner-logo">
+                            <div class="partner-info">
+                                <h3>LYNXauto</h3>
+                                <p>Официальный генеральный партнер конкурса "АВТОСЕРВИС ГОДА 2025"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ближайший воркшоп - улучшенный -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fas fa-chalkboard-teacher"></i> Ближайший воркшоп</div>
+                        </div>
+                        <div class="workshop-card">
+                            <div class="workshop-layout">
+                                <div class="workshop-brand-section">
+                                    <img src="https://autocom.parts/storage/c/2025/01/20/1737470252_380485_74.png" alt="Bosch" class="workshop-brand-logo">
+                                    <div class="workshop-brand-name">BOSCH</div>
+                                </div>
+                                <div class="workshop-content-section">
+                                    <h3 class="workshop-topic">Диагностика электронных систем современных автомобилей</h3>
+                                    <p class="workshop-description">Разберитесь со сложными случаями диагностики и научитесь быстро находить неисправности. Эксперт ответит на ваши вопросы в прямом эфире.</p>
+                                    
+                                    <div class="workshop-meta">
+                                        <div class="workshop-meta-item">
+                                            <i class="fas fa-user-tie"></i>
+                                            <span>Иван Петров • Технический эксперт Bosch</span>
+                                        </div>
+                                        <div class="workshop-meta-item">
+                                            <i class="fas fa-calendar"></i>
+                                            <span>Среда, 20 ноября 2025 • 15:00 МСК</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="workshop-actions">
+                                        <button class="btn btn-accent" id="joinWorkshop">
+                                            <i class="fas fa-user-plus"></i> УЧАСТВОВАТЬ
+                                        </button>
+                                        <button class="btn btn-outline" id="askQuestion">
+                                            <i class="fas fa-question-circle"></i> ЗАДАТЬ ВОПРОС
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Блок призов в зависимости от номинации -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fas fa-gift"></i> Призы в вашей номинации</div>
+                        </div>
+                        <div class="prizes-grid">
+                            <div class="prize-card">
+                                <div class="prize-header">
+                                    <div class="prize-icon">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <div class="prize-title">1 место</div>
+                                    <div class="prize-subtitle">Лучший механик</div>
+                                </div>
+                                <div class="prize-content">
+                                    <div class="prize-value">30 000 ₽</div>
+                                    <div class="prize-description">
+                                        Сертификат на оборудование и инструменты для профессионального автосервиса
+                                    </div>
+                                    <div class="prize-conditions">
+                                        Для победы необходимо занять первое место в финале конкурса
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="prize-card">
+                                <div class="prize-header" style="background: linear-gradient(135deg, #C0C0C0, #A0A0A0);">
+                                    <div class="prize-icon">
+                                        <i class="fas fa-medal"></i>
+                                    </div>
+                                    <div class="prize-title">2 место</div>
+                                    <div class="prize-subtitle">Лучший механик</div>
+                                </div>
+                                <div class="prize-content">
+                                    <div class="prize-value">15 000 ₽</div>
+                                    <div class="prize-description">
+                                        Сертификат на профессиональные инструменты и оборудование
+                                    </div>
+                                    <div class="prize-conditions">
+                                        Для победы необходимо занять второе место в финале конкурса
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Мотивационный триггер -->
+                    <div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: white;">
+                        <div style="text-align: center; padding: 10px;">
+                            <i class="fas fa-rocket" style="font-size: 2.5rem; margin-bottom: 16px;"></i>
+                            <h3 style="margin-bottom: 12px; font-size: 1.3rem;">Вы в 35 баллах от ТОП-10 Москвы!</h3>
+                            <p style="margin-bottom: 20px; opacity: 0.9; line-height: 1.5;">Пройдите Тест 3 на максимальный результат и повысьте шансы на выход в региональный финал.</p>
+                            <button class="btn" style="background: white; color: var(--primary); width: 100%;" id="goToTesting">
+                                <i class="fas fa-play-circle"></i> К тестированию
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Автомобильная викторина -->
+                    <div class="quiz-card">
+                        <div class="quiz-header">
+                            <div class="quiz-icon">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <div>
+                                <div class="quiz-title">Автомобильная викторина</div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Проверка знаний • Ежедневные вопросы</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-description">
+                            Проверьте свои знания в увлекательной викторине! Отвечайте на вопросы каждый день и получайте дополнительные баллы.
+                        </div>
+                        
+                        <div class="quiz-stats">
+                            <div class="quiz-stat">
+                                <div class="quiz-stat-value">7</div>
+                                <div class="quiz-stat-label">Дней подряд</div>
+                            </div>
+                            <div class="quiz-stat">
+                                <div class="quiz-stat-value">24</div>
+                                <div class="quiz-stat-label">Правильных ответов</div>
+                            </div>
+                            <div class="quiz-stat">
+                                <div class="quiz-stat-value">+15</div>
+                                <div class="quiz-stat-label">Бонусных баллов</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-actions">
+                            <button class="btn" id="startQuiz">
+                                <i class="fas fa-play-circle"></i> Начать викторину
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Аттестация от производителей - улучшенная -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fas fa-award"></i> Аттестация от производителей</div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" id="allCertifications"><i class="fas fa-external-link-alt"></i> Все программы</button>
+                    </div>
+                </div>
+                <div class="certification-grid">
+                    <!-- Завершенные аттестации -->
+                    <div class="certification-card completed">
+                        <div class="certification-badge badge-completed">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <img src="https://autocom.parts/i/banners/everycar_partnrs/arnezi.svg" alt="ARNEZI" class="certification-logo">
+                        <div class="certification-title">ARNEZI</div>
+                        <div class="certification-status status-completed">
+                            <i class="fas fa-check-circle"></i> Завершено
+                        </div>
+                        <button class="btn btn-primary">Сертификат</button>
+                    </div>
+                    
+                    <div class="certification-card completed">
+                        <div class="certification-badge badge-completed">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <img src="https://autocom.parts/i/banners/everycar_partnrs/azumi_logo.svg" alt="AZUMI" class="certification-logo">
+                        <div class="certification-title">AZUMI</div>
+                        <div class="certification-status status-completed">
+                            <i class="fas fa-check-circle"></i> Завершено
+                        </div>
+                        <button class="btn btn-primary">Сертификат</button>
+                    </div>
+                    
+                    <!-- Аттестации к прохождению -->
+                    <div class="certification-card pending">
+                        <div class="certification-badge badge-pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <img src="https://autocom.parts/i/banners/everycar_partnrs/Febest.svg" alt="FEBEST" class="certification-logo">
+                        <div class="certification-title">FEBEST</div>
+                        <div class="certification-status status-pending">
+                            <i class="fas fa-hourglass-half"></i> Требуется прохождение
+                        </div>
+                        <button class="btn btn-accent">Пройти аттестацию</button>
+                    </div>
+                    
+                    <div class="certification-card pending">
+                        <div class="certification-badge badge-pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <img src="https://autocom.parts/i/banners/everycar_partnrs/ganz.svg" alt="GANZ" class="certification-logo">
+                        <div class="certification-title">GANZ</div>
+                        <div class="certification-status status-pending">
+                            <i class="fas fa-hourglass-half"></i> Требуется прохождение
+                        </div>
+                        <button class="btn btn-accent">Пройти аттестацию</button>
+                    </div>
+                    
+                    <div class="certification-card pending">
+                        <div class="certification-badge badge-pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <img src="https://autocom.parts/i/banners/everycar_partnrs/hlmando.svg" alt="HL MANDO" class="certification-logo">
+                        <div class="certification-title">HL MANDO</div>
+                        <div class="certification-status status-pending">
+                            <i class="fas fa-hourglass-half"></i> Требуется прохождение
+                        </div>
+                        <button class="btn btn-accent">Пройти аттестацию</button>
+                    </div>
+                    
+                    <div class="certification-card pending">
+                        <div class="certification-badge badge-pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <img src="https://autocom.parts/i/banners/everycar_partnrs/jikiu.svg" alt="JIKIU" class="certification-logo">
+                        <div class="certification-title">JIKIU</div>
+                        <div class="certification-status status-pending">
+                            <i class="fas fa-hourglass-half"></i> Требуется прохождение
+                        </div>
+                        <button class="btn btn-accent">Пройти аттестацию</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Рейтинги - упрощенные -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fas fa-chart-line"></i> Рейтинги</div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline"><i class="fas fa-sync-alt"></i> Обновить</button>
+                    </div>
+                </div>
+                <div class="ranking-filters">
+                    <button class="filter-btn active">Механики</button>
+                    <button class="filter-btn">Мастер-консультанты</button>
+                    <button class="filter-btn">Руководители</button>
+                    <button class="filter-btn">Командный зачет</button>
+                </div>
+                <div class="ranking-filters">
+                    <button class="filter-btn active">Москва</button>
+                    <button class="filter-btn">Область</button>
+                    <button class="filter-btn">Федеральный округ</button>
+                    <button class="filter-btn">Страна</button>
+                </div>
+                <table class="ranking-table">
+                    <thead>
+                        <tr>
+                            <th class="ranking-position">Место</th>
+                            <th>Участник</th>
+                            <th>Автосервис</th>
+                            <th>Баллы</th>
+                            <th class="ranking-progress">Прогресс</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ranking-position">1</td>
+                            <td>Иванов Сергей</td>
+                            <td>АвтоМир</td>
+                            <td>415</td>
+                            <td class="ranking-progress">
+                                <div class="progress-visual">
+                                    <div class="progress-visual-fill" style="width: 100%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">2</td>
+                            <td>Петрова Анна</td>
+                            <td>ТехноСервис</td>
+                            <td>390</td>
+                            <td class="ranking-progress">
+                                <div class="progress-visual">
+                                    <div class="progress-visual-fill" style="width: 94%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td class="ranking-progress">
+                                <div class="progress-visual">
+                                    <div class="progress-visual-fill" style="width: 0%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="current-user">
+                            <td class="ranking-position">15</td>
+                            <td><strong>Волков Алексей (Вы)</strong></td>
+                            <td>Вилгуд</td>
+                            <td><strong>285</strong></td>
+                            <td class="ranking-progress">
+                                <div class="progress-visual">
+                                    <div class="progress-visual-fill" style="width: 69%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">16</td>
+                            <td>Сидоров Дмитрий</td>
+                            <td>АвтоДоктор</td>
+                            <td>280</td>
+                            <td class="ranking-progress">
+                                <div class="progress-visual">
+                                    <div class="progress-visual-fill" style="width: 67%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Конференция -->
+            <div class="card conference-banner">
+                <div class="conference-content">
+                    <div class="conference-badge">Онлайн-конференция</div>
+                    <div class="conference-title">АВТОСЕРВИС 2026</div>
+                    <div class="conference-date">25 декабря 2025</div>
+                    <div class="conference-description">
+                        Крупнейшее отраслевое событие года с участием ведущих экспертов автомобильной индустрии. 
+                        Новые технологии, бизнес-кейсы и нетворкинг с лидерами рынка.
+                    </div>
+                    
+                    <div class="conference-features">
+                        <div class="conference-feature">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Аналитика</span>
+                        </div>
+                        <div class="conference-feature">
+                            <i class="fas fa-balance-scale"></i>
+                            <span>Юридические</span>
+                        </div>
+                        <div class="conference-feature">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Финансы</span>
+                        </div>
+                        <div class="conference-feature">
+                            <i class="fas fa-tags"></i>
+                            <span>Маркировка</span>
+                        </div>
+                    </div>
+                    
+                    <div class="conference-actions">
+                        <button class="btn" id="registerConference">
+                            <i class="fas fa-user-plus"></i> Зарегистрироваться
+                        </button>
+                        <button class="btn" id="addConferenceToCalendar">
+                            <i class="fas fa-calendar-plus"></i> В календарь
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Обучение - обновленное -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fas fa-graduation-cap"></i> Повысьте шансы на победу с платформой АВТОКОМ</div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" id="allCourses"><i class="fas fa-external-link-alt"></i> Все курсы</button>
+                    </div>
+                </div>
+                <div class="learning-grid">
+                    <div class="learning-card">
+                        <div class="learning-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="learning-content">
+                            <div class="learning-title">Академия АВТОКОМ</div>
+                            <div class="learning-desc">Онлайн-курсы для подготовки: диагностика систем, клиентская служба, управление автосервисом</div>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-play-circle"></i> Бесплатный доступ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="learning-card">
+                        <div class="learning-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="learning-content">
+                            <div class="learning-title">Воркшопы и конференции</div>
+                            <div class="learning-desc">Ближайшие мероприятия: "Тренды авторемонта 2025", "Цифровизация СТО"</div>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> Записаться
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="learning-card">
+                        <div class="learning-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <div class="learning-content">
+                            <div class="learning-title">Автомобильная викторина</div>
+                            <div class="learning-desc">Ежедневные вопросы для проверки знаний и получения дополнительных баллов</div>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-play-circle"></i> Начать викторину
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пригласи друга -->
+            <div class="invite-friend">
+                <div class="invite-icon">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <div class="invite-title">Пригласи друга в конкурс</div>
+                <div class="invite-description">
+                    Получите дополнительные баллы за каждого приглашенного участника. 
+                    Вместе вы сможете подняться выше в рейтинге и получить больше шансов на победу!
+                </div>
+                <div class="invite-actions">
+                    <button class="btn" id="shareLink">
+                        <i class="fas fa-share-alt"></i> Поделиться ссылкой
+                    </button>
+                    <button class="btn" id="sendInvitation">
+                        <i class="fas fa-envelope"></i> Отправить приглашение
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <img src="https://autocom.parts/i/logo.svg" alt="АВТОКОМ" class="footer-logo">
+                <p>Платформа управления автосервисом с геймификацией, аналитикой и мотивацией персонала.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>О компании</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Новости</a></li>
+                    <li><a href="#">Издания</a></li>
+                </ul>
+                
+                <h3>Проекты</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Быстрые ссылки</a></li>
+                    <li><a href="#">Дистрибьюторы</a></li>
+                    <li><a href="#">Производители запасных частей</a></li>
+                    <li><a href="#">Академия СТО</a></li>
+                    <li><a href="#">Конкурс СТО</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Документы</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Политика конфиденциальности</a></li>
+                    <li><a href="#">Политика обработки персональных данных</a></li>
+                    <li><a href="#">Согласие на обработку персональных данных</a></li>
+                    <li><a href="#">Согласие на обработку cookies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Контакты</h3>
+                <div class="footer-contact">
+                    <p><strong>Поддержка:</strong> +7 495 858-52-99</p>
+                    <p><strong>E-mail:</strong> project@autocom.parts</p>
+                    <p><strong>Техподдержка:</strong> 24/7</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 АВТОКОМ — Платформа управления автосервисом. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Имитация интерактивности для демо
+        document.addEventListener('DOMContentLoaded', function() {
+            // Переключение активной навигации
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Переключение активных фильтров рейтинга
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!this.classList.contains('active')) {
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Анимация прогресса теста
+            const progressFill = document.querySelector('.test-card.active .progress-fill');
+            if (progressFill) {
+                let progress = 30;
+                
+                function updateProgress() {
+                    if (progress < 100) {
+                        progress += Math.random() * 5;
+                        progressFill.style.width = Math.min(progress, 100) + '%';
+                    }
+                }
+                
+                // Обновляем прогресс каждые 3 секунды для демо
+                setInterval(updateProgress, 3000);
+            }
+            
+            // Добавляем анимацию появления элементов при загрузке
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Уведомления
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notification-message');
+            
+            function showNotification(message, type = 'success') {
+                notificationMessage.textContent = message;
+                notification.className = 'notification';
+                notification.classList.add(type, 'show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Обработка добавления участника в команду
+            const addMemberCard = document.querySelector('.add-member-card');
+            if (addMemberCard) {
+                addMemberCard.addEventListener('click', function() {
+                    showNotification('Функция добавления участника в команду будет реализована в ближайшее время!', 'info');
+                });
+            }
+            
+            // Обработка переключения механики баллов
+            const toggleScoringBtn = document.getElementById('toggleScoring');
+            const scoringSystem = document.getElementById('scoringSystem');
+            
+            if (toggleScoringBtn && scoringSystem) {
+                toggleScoringBtn.addEventListener('click', function() {
+                    scoringSystem.classList.toggle('expanded');
+                    if (scoringSystem.classList.contains('expanded')) {
+                        toggleScoringBtn.innerHTML = '<i class="fas fa-times"></i> Скрыть механику';
+                    } else {
+                        toggleScoringBtn.innerHTML = '<i class="fas fa-info-circle"></i> Механика баллов';
+                    }
+                });
+            }
+            
+            // Обработчики для всех кнопок
+            const buttonHandlers = {
+                // Тесты
+                'continueTest': 'Переход к тестированию...',
+                'analyzeTest': 'Загрузка анализа ответов...',
+                'remindTest': 'Напоминание установлено!',
+                'refreshTests': 'Обновление данных...',
+                
+                // Команда
+                'teamDetails': 'Загрузка деталей команды...',
+                'inviteMember': 'Открытие формы приглашения...',
+                
+                // Воркшопы
+                'joinWorkshop': 'Регистрация на воркшоп...',
+                'askQuestion': 'Открытие формы для вопроса...',
+                
+                // Календарь
+                'addToCalendar': 'Открытие календаря...',
+                'addAllToCalendar': 'Все события добавлены в календарь!',
+                
+                // Викторина
+                'startQuiz': 'Запуск викторины...',
+                
+                // Тестирование
+                'goToTesting': 'Переход к тестированию...',
+                
+                // Аттестация
+                'allCertifications': 'Загрузка всех программ...',
+                
+                // Конференция
+                'registerConference': 'Регистрация на конференцию...',
+                'addConferenceToCalendar': 'Конференция добавлена в календарь!',
+                
+                // Обучение
+                'allCourses': 'Загрузка всех курсов...',
+                
+                // Приглашения
+                'shareLink': 'Открытие меню分享...',
+                'sendInvitation': 'Открытие формы отправки приглашения...',
+                
+                // Статистика
+                'showStats': 'Загрузка статистики...'
+            };
+            
+            // Добавляем обработчики для всех кнопок
+            Object.keys(buttonHandlers).forEach(buttonId => {
+                const button = document.getElementById(buttonId);
+                if (button) {
+                    button.addEventListener('click', function() {
+                        showNotification(buttonHandlers[buttonId], 'info');
+                    });
+                }
+            });
+            
+            // Ленивая загрузка изображений
+            const lazyImages = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            lazyImages.forEach(img => imageObserver.observe(img));
+            
+            // Имитация загрузки данных
+            function simulateLoading() {
+                const skeletons = document.querySelectorAll('.skeleton');
+                skeletons.forEach(skeleton => {
+                    skeleton.style.display = 'block';
+                });
+                
+                setTimeout(() => {
+                    skeletons.forEach(skeleton => {
+                        skeleton.style.display = 'none';
+                    });
+                    showNotification('Данные успешно загружены!', 'success');
+                }, 2000);
+            }
+            
+            // Добавляем скелетоны при загрузке
+            window.addEventListener('load', function() {
+                // Имитируем загрузку данных
+                setTimeout(simulateLoading, 1000);
+            });
+            
+            // Добавляем accessibility улучшения
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Закрываем все модальные окна при нажатии Escape
+                    const modals = document.querySelectorAll('.modal');
+                    modals.forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                }
+            });
+            
+            // Улучшаем фокус для accessibility
+            const focusableElements = document.querySelectorAll('button, a, input, select, textarea');
+            focusableElements.forEach(el => {
+                el.setAttribute('tabindex', '0');
+            });
+        });
+    </script>
+</body>
+</html>

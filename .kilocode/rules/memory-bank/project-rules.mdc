@@ -1,0 +1,267 @@
+---
+alwaysApply: true
+---
+
+Цель: Разработка комплексного портала для сети автосервисов EVERYCAR с системой
+обучения, управления персоналом и электронной коммерцией.
+Ключевые модули:
+● Система авторизации и регистрации
+● Анкета НДФЛ
+● Управление сотрудниками
+● Магазин образовательных продуктов
+● Онлайн-академия
+
+Технологический стек:
+● Frontend: Next.js 15+, TypeScript, Tailwind CSS, Zustand, Zod, Shadcn/Ui
+● Backend: Supabase (Auth, DB, Storage)
+
+A.1 МОДУЛЬ АВТОРИЗАЦИИ И РЕГИСТРАЦИИ
+Функциональные требования
+● Регистрация нового пользователя
+○ Ввод email, пароля, подтверждения пароля
+○ Валидация формата email
+○ Проверка сложности пароля (мин. 8 символов, цифры, буквы)
+○ Подтверждение email через ссылку в письме
+● Аутентификация пользователя
+○ Вход по email и паролю
+○ Восстановление пароля через email
+○ JWT токены с refresh/access механикой
+○ Автоматический выход при истечении сессии
+● Ролевая модель
+○ Сотрудник (базовые права)
+○ Руководитель (управление командой)
+○ Администратор (полные права)
+○ Подписант (доступ к партнерским разделам)
+Технические спецификации
+// Интерфейс пользователя
+interface User {
+id: string;
+email: string;
+passwordHash: string;
+role: 'employee' | 'manager' | 'admin' | 'partner';
+isVerified: boolean;
+createdAt: Date;
+lastLogin: Date;
+}
+// API endpoints
+POST /api/auth/register  
+POST /api/auth/login  
+// Регистрация
+// Вход
+POST /api/auth/forgot-password // Восстановление
+POST /api/auth/reset-password // Сброс пароля
+GET /api/auth/verify-email // Подтверждение email
+POST /api/auth/logout  
+// Выход
+Валидации
+● Email: стандартный формат, уникальность
+● Пароль: мин. 8 символов, 1 цифра, 1 буква
+● Rate limiting: 5 попыток входа в час с одного IP
+
+A.2 МОДУЛЬ АНКЕТЫ НДФЛ
+Структура данных
+interface TaxDeclaration {
+// Персональные данные
+personal: {
+firstName: string;
+lastName: string;
+middleName?: string;
+inn: string; // ИНН (12 цифр)
+snils: string; // СНИЛС (11 цифр)
+passport: {
+series: string; // 4 цифры
+number: string; // 6 цифр
+issueDate: Date;
+issuer: string;
+};
+};
+
+// Доходы
+incomes: IncomeItem[];
+
+// Вычеты
+deductions: {
+standard: StandardDeduction[];
+social: SocialDeduction[];
+property: PropertyDeduction[];
+};
+
+// Файлы
+documents: TaxDocument[];
+}
+
+interface IncomeItem {
+source: string;
+amount: number;
+taxRate: number; // 13%, 15%, etc.
+period: Date;
+currency: 'RUB';
+}
+Валидации
+● ИНН: 12 цифр, контрольная сумма
+● СНИЛС: 11 цифр, контрольная сумма
+● Паспорт: серия 4 цифры, номер 6 цифр
+● Даты: корректный формат, не будущие даты
+● Суммы: положительные числа, адекватные лимиты
+Расчеты
+● Автоматический расчет налоговой базы
+● Расчет суммы налога к уплате/возврату
+● Валидация соответствия доходов и вычетов
+
+A.3 МОДУЛЬ УПРАВЛЕНИЯ СОТРУДНИКАМИ
+Модель данных
+interface Employee {
+id: string;
+personalInfo: {
+firstName: string;
+lastName: string;
+middleName?: string;
+email: string;
+phone: string;
+position: string; // Должность
+department: string; // Отдел
+};
+
+workInfo: {
+hireDate: Date;
+status: 'active' | 'inactive' | 'on_leave';
+salary?: number;
+role: UserRole;
+};
+
+systemAccess: {
+hasPortalAccess: boolean;
+permissions: string[];
+lastLogin?: Date;
+};
+}
+Функции управления
+● CRUD операции: создание, чтение, обновление, удаление
+● Массовый импорт через CSV/XLSX
+● Фильтрация по отделу, статусу, должности
+● Экспорт данных в различные форматы
+● Назначение прав доступа
+Валидации
+● Уникальность email сотрудника
+● Корректность формата телефона
+● Валидация дат (прием на работу, увольнение)
+● Проверка прав доступа при изменении ролей
+
+A.4 МОДУЛЬ МАГАЗИНА
+Модель товара
+interface Product {
+id: string;
+sku: string; // Артикул
+name: string; // Название
+description: string; // Описание
+price: number; // Цена
+oldPrice?: number; // Старая цена
+category: string; // Категория
+type: 'course' | 'event' | 'physical' | 'digital';
+
+// Для курсов
+courseDetails?: {
+duration: number; // Часы
+level: 'beginner' | 'intermediate' | 'advanced';
+accessPeriod: number; // Дней доступа
+instructors: string[]; // Преподаватели
+};
+
+// Для физических товаров
+inventory?: {
+stock: number;
+minStock: number;
+};
+
+media: {
+images: string[]; // Пути к изображениям
+video?: string; // Ссылка на видео
+};
+}
+Процесс заказа
+interface Order {
+id: string;
+userId: string;
+items: OrderItem[];
+status: 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled';
+total: number;
+payment: PaymentInfo;
+shipping?: ShippingInfo;
+}
+
+interface OrderItem {
+productId: string;
+quantity: number;
+price: number;
+total: number;
+}
+Интеграции
+● Платежные системы (ЮKassa, CloudPayments)
+● Email уведомления о заказах
+● Интеграция с академией для доступа к курсам
+● Система скидок и промокодов
+
+A.5 МОДУЛЬ ОНЛАЙН-АКАДЕМИИ
+Структура курса
+interface Course {
+id: string;
+title: string;
+description: string;
+instructor: string;
+level: 'beginner' | 'intermediate' | 'advanced';
+duration: number; // в часах
+price: number;
+
+modules: CourseModule[];
+requirements: string[];
+learningObjectives: string[];
+
+ratings: {
+average: number;
+count: number;
+};
+}
+
+interface CourseModule {
+title: string;
+lessons: Lesson[];
+order: number;
+}
+
+interface Lesson {
+title: string;
+content: LessonContent[];
+duration: number; // в минутах
+type: 'video' | 'text' | 'quiz' | 'assignment';
+}
+interface LessonContent {
+type: 'video' | 'text' | 'image' | 'file';
+url: string;
+content?: string; // для текстового контента
+}
+Система прогресса
+interface UserProgress {
+userId: string;
+courseId: string;
+completedLessons: string[];
+currentModule: number;
+currentLesson: number;
+startDate: Date;
+lastActivity: Date;
+status: 'not_started' | 'in_progress' | 'completed';
+score?: number; // итоговая оценка
+}
+Функции обучения
+● Видеоплеер с поддержкой разных форматов
+● Интерактивные тесты с автоматической проверкой
+● Система бейджей и достижений
+● Сертификаты об окончании (PDF генерация)
+● Форум для обсуждения курсов
+● Назначение курсов руководителями
+Административные функции
+● CRUD курсов и уроков
+● Управление преподавателями
+● Просмотр статистики по курсам
+● Модерация отзывов
+● Назначение курсов группам пользователей
+

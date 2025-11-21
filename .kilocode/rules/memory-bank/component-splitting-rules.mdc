@@ -1,0 +1,377 @@
+---
+alwaysApply: true
+---
+
+Назначение документа
+Этот документ определяет правила и лучшие практики разбиения больших компонентов на более мелкие и переиспользуемые части. Цель — обеспечить поддерживаемость, читаемость и тестируемость кода, а также предоставить AI-агентам четкие инструкции по декомпозиции компонентов.
+
+Принципы декомпозиции компонентов
+1. Правило единственной ответственности (Single Responsibility Principle)
+Каждый компонент должен решать только одну конкретную задачу.
+
+Критерии для разделения:
+
+Компонент имеет более 200 строк кода
+
+Компонент выполняет более одной логической функции
+
+Компонент содержит сложную вложенную логику рендеринга
+
+Отдельные части компонента могут быть переиспользованы в других местах
+
+2. Правило "магического числа" 50-100-150
+50 строк: Идеальный размер компонента
+
+100 строк: Приемлемый размер, но стоит задуматься о разделении
+
+150+ строк: Требуется обязательное разделение на подкомпоненты
+
+3. Выявление точек разделения
+Разделяйте компонент когда встречаете:
+
+Большие условные блоки рендеринга (if/else, switch)
+
+Повторяющиеся паттерны в JSX
+
+Логически независимые секции интерфейса
+
+Разные состояния компонента (loading, error, success)
+
+Практические правила разделения
+1. Разделение по ответственности
+```tsx
+// ПЛОХО: Один большой компонент
+const UserProfile = ({ user }) => {
+  return (
+    <div className="profile">
+      <div className="header">
+        <img src={user.avatar} alt={user.name} />
+        <h1>{user.name}</h1>
+        <p>{user.bio}</p>
+      </div>
+      <div className="content">
+        <div className="stats">
+          <span>Followers: {user.followers}</span>
+          <span>Following: {user.following}</span>
+        </div>
+        <div className="actions">
+          <button onClick={() => followUser(user.id)}>Follow</button>
+          <button onClick={() => messageUser(user.id)}>Message</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+// ХОРОШО: Разделенный на компоненты
+
+const UserProfile = ({ user }) => {
+  return (
+    <div className="profile">
+      <ProfileHeader user={user} />
+      <ProfileContent user={user} />
+    </div>
+  );
+};
+
+const ProfileHeader = ({ user }) => (
+  <div className="header">
+    <Avatar src={user.avatar} alt={user.name} />
+    <UserName name={user.name} />
+    <Bio text={user.bio} />
+  </div>
+);
+
+const ProfileContent = ({ user }) => (
+  <div className="content">
+    <UserStats followers={user.followers} following={user.following} />
+    <UserActions userId={user.id} />
+  </div>
+);
+```
+2. Разделение логики и представления
+Выносите сложную логику в хуки, оставляя компоненты чисто презентационными.
+
+```tsx
+// ПЛОХО: Логика и представление вместе
+const ComplexComponent = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchData()
+      .then(setData)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <Loader />;
+  if (error) return <Error message={error.message} />;
+  
+  return <DataView data={data} />;
+};
+
+// ХОРОШО: Логика вынесена в хук
+const useData = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchData()
+      .then(setData)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, []);
+
+  return { data, loading, error };
+};
+
+const ComplexComponent = () => {
+  const { data, loading, error } = useData();
+
+  if (loading) return <Loader />;
+  if (error) return <Error message={error.message} />;
+  
+  return <DataView data={data} />;
+};
+```
+3. Создание переиспользуемых компонентов
+Выявляйте и выносите переиспользуемые части интерфейса.
+
+```tsx
+// Переиспользуемый компонент кнопки
+const Button = ({ 
+  variant = 'primary', 
+  size = 'medium', 
+  children, 
+  ...props 
+}) => {
+  const baseClasses = 'btn';
+  const variantClasses = `btn-${variant}`;
+  const sizeClasses = `btn-${size}`;
+  
+  return (
+    <button 
+      className={`${baseClasses} ${variantClasses} ${sizeClasses}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
+// Специализированные компоненты на основе базового
+const PrimaryButton = (props) => (
+  <Button variant="primary" {...props} />
+);
+
+const LargeButton = (props) => (
+  <Button size="large" {...props} />
+);
+```
+Правила именования компонентов
+1. Соглашение об именах
+Имена компонентов: PascalCase
+
+Имена файлов: совпадают с именем компонента (Button.tsx)
+
+Папки для компонентов: PascalCase или kebab-case
+
+2. Суффиксы для специализированных компонентов
+Container — для компонентов-контейнеров с логикой
+
+Presenter / View — для презентационных компонентов
+
+Item — для элементов списков
+
+List — для списков элементов
+
+Структура папок для компонентов
+```text
+/src
+  /components
+    /ui              # Базовые UI компоненты (Button, Input, etc.)
+      /Button
+        Button.tsx
+        Button.test.tsx
+        index.ts
+    /forms           # Компоненты форм
+    /layout          # Компоненты layout
+    /features        # Компоненты, специфичные для фич
+      /auth
+        /LoginForm
+          LoginForm.tsx
+          LoginForm.hooks.ts
+          index.ts
+```
+Инструкции для AI-агентов
+1. Анализ кода на необходимость разделения
+При анализе кода AI-агенты должны определять:
+
+Компоненты с более 150 строк кода
+
+Компоненты с высокой цикломатической сложностью
+
+Повторяющиеся паттерны в разных компонентах
+
+Компоненты, совмещающие логику и представление
+
+2. Автоматическое разделение компонентов
+При генерации или рефакторинге кода AI-агенты должны:
+
+Предлагать разделение больших компонентов
+
+Создавать переиспользуемые компоненты для повторяющихся паттернов
+
+Выносить логику в кастомные хуки
+
+Следовать established соглашениям по именованию
+
+3. Генерация предложений по рефакторингу
+AI-агенты должны предлагать конкретные пути улучшения:
+
+markdown
+**Предложение по рефакторингу для компонента `UserProfile` (215 строк):**
+
+1. Вынести `AvatarSection` в отдельный компонент (строки 15-45)
+2. Создать переиспользуемый `InfoCard` для секции с информацией (строки 50-120)
+3. Перенести логику запросов в хук `useUserData` (строки 5-14, 125-135)
+4. Разделить обработчики событий на отдельные функции
+
+**Ожидаемый результат:**
+- Уменьшение размера `UserProfile` до ~50 строк
+- Создание 3 переиспользуемых компонентов
+- Улучшение тестируемости кода
+Метрики качества декомпозиции
+1. Количественные метрики
+Размер компонента: не более 150 строк
+
+Цикломатическая сложность: не более 10
+
+Количество пропсов: не более 8-10
+
+2. Качественные метрики
+Переиспользуемость: компонент можно использовать в разных контекстах
+
+Тестируемость: компонент легко покрыть unit-тестами
+
+Читаемость: компонент понятен без дополнительных объяснений
+
+Пример рефакторинга AI-агентом
+```tsx
+// ДО: Большой компонент
+const UserDashboard = () => {
+  const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    // Загрузка данных пользователя
+    fetchUser().then(setUser);
+    
+    // Загрузка постов пользователя
+    fetchUserPosts().then(setPosts).finally(() => setLoading(false));
+  }, []);
+  
+  if (loading) return <div>Loading...</div>;
+  
+  return (
+    <div>
+      <div className="user-info">
+        <h1>{user.name}</h1>
+        <p>{user.email}</p>
+        <img src={user.avatar} alt={user.name} />
+      </div>
+      
+      <div className="user-posts">
+        <h2>Posts</h2>
+        {posts.map(post => (
+          <div key={post.id} className="post">
+            <h3>{post.title}</h3>
+            <p>{post.body}</p>
+          </div>
+        ))}
+      </div>
+      
+      <div className="user-actions">
+        <button>Edit Profile</button>
+        <button>Create Post</button>
+      </div>
+    </div>
+  );
+};
+
+// ПОСЛЕ: Разделенный код
+const UserDashboard = () => {
+  const { user, posts, loading } = useUserDashboardData();
+  
+  if (loading) return <LoadingSpinner />;
+  
+  return (
+    <div>
+      <UserInfo user={user} />
+      <UserPosts posts={posts} />
+      <UserActions userId={user.id} />
+    </div>
+  );
+};
+
+// Логика вынесена в хук
+const useUserDashboardData = () => {
+  const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    const loadData = async () => {
+      const [userData, postsData] = await Promise.all([
+        fetchUser(),
+        fetchUserPosts()
+      ]);
+      
+      setUser(userData);
+      setPosts(postsData);
+      setLoading(false);
+    };
+    
+    loadData();
+  }, []);
+  
+  return { user, posts, loading };
+};
+
+// Презентационные компоненты
+const UserInfo = ({ user }) => (
+  <div className="user-info">
+    <h1>{user.name}</h1>
+    <p>{user.email}</p>
+    <img src={user.avatar} alt={user.name} />
+  </div>
+);
+
+const UserPosts = ({ posts }) => (
+  <div className="user-posts">
+    <h2>Posts</h2>
+    {posts.map(post => (
+      <PostItem key={post.id} post={post} />
+    ))}
+  </div>
+);
+
+const PostItem = ({ post }) => (
+  <div className="post">
+    <h3>{post.title}</h3>
+    <p>{post.body}</p>
+  </div>
+);
+
+const UserActions = ({ userId }) => (
+  <div className="user-actions">
+    <Button>Edit Profile</Button>
+    <Button>Create Post</Button>
+  </div>
+);
+```

@@ -1,0 +1,328 @@
+---
+alwaysApply: true
+---
+
+Назначение документа
+Этот документ определяет стандарты и лучшие практики документирования кода в данном проекте. Основная цель — обеспечить согласованность, ясность и машиночитаемость комментариев. Это позволит AI-агентам (например, в Cursor, GitHub Copilot, Codeium) и разработчикам лучше понимать структуру, предназначение и поведение кода, что упростит его анализ, доработку и генерацию.
+
+Общие принципы
+Ясность и краткость: Комментарии должны объяснять «почему» и «что», а не «как» (если код не содержит сложной алгоритмической логики). Сам код должен быть настолько простым и читаемым, насколько это возможно.
+
+Актуальность: Документация должна всегда соответствовать текущей реализации кода. Устаревший комментарий хуже, чем его отсутствие.
+
+Машиночитаемость: Используйте стандартные форматы (JSDoc, docstring-like), чтобы AI-агенты и IDE могли их корректно парсить и использовать для подсказок, навигации и генерации кода.
+
+Английский язык: Весь документационный комментарий должен быть написан на английском языке. Это стандарт для программирования и гарантирует лучшую поддержку со стороны AI-инструментов. Имена переменных/функций (не комментарии) могут быть на английском или другом языке (на усмотрение команды), но их назначение в комментариях должно быть описано на английском.
+
+Правила документирования
+
+1. Документирование модулей (файлов)
+   Каждый файл должен начинаться с комментария, описывающего его высокоуровневое предназначение.
+
+Формат (JavaScript/TypeScript):
+
+```
+
+    @module ModuleName
+    @description Краткое описание того, за что отвечает этот модуль или файл.
+    @author Ваше Имя
+    @version 1.0.0
+    @license MIT
+```
+
+    @module — опционально, но помогает в навигации.
+
+@description — обязателен. Что это за файл? (например, Module for user authentication logic, Main application component).
+
+Остальные теги — на усмотрение.
+
+2. Документирование функций и методов
+   Должны быть описаны все параметры, возвращаемое значение и возможные исключения.
+
+Обязательные теги:
+
+@description — что делает функция.
+
+@param — для каждого параметра: тип, имя и описание.
+
+@returns или @return — тип и описание возвращаемого значения.
+
+Опциональные теги:
+
+@throws / @exception — какие исключения может выбросить функция и при каких условиях.
+
+@example — простой пример использования (очень полезно для AI).
+
+Пример (JavaScript/TypeScript):
+
+```
+
+    @description Calculates the total price of an order including tax and discount.
+    @param {number} basePrice - The base price of the order before any adjustments.
+    @param {number} taxRate - The tax rate to apply (e.g., 0.19 for 19%).
+    @param {number} [discount=0] - The optional discount amount to subtract.
+    @returns {number} The final price after applying tax and discount.
+    @throws {TypeError} Will throw an error if basePrice or taxRate are not numbers.
+    @example
+    const total = calculateTotal(100, 0.19, 10); // Returns 108.1
+
+    function calculateTotal(basePrice, taxRate, discount = 0) {
+        if (typeof basePrice !== 'number' || typeof taxRate !== 'number') {
+            throw new TypeError('Base price and tax rate must be numbers.');
+        }
+        return (basePrice - discount) _ (1 + taxRate);
+    }
+```
+
+3. Документирование классов
+   Класс должен быть описан, а также каждый его публичный метод и свойство.
+
+Пример (TypeScript):
+
+```
+
+    @description Represents a user in the system.
+    @class
+
+    class User {
+
+        @description The user's unique identifier.
+        @type {string}
+        id: string;
+
+
+        @description Creates an instance of User.
+        @param {string} id - The user ID.
+        @param {string} name - The user's full name.
+        @constructor
+
+        constructor(id: string, public name: string) {
+            this.id = id;
+        }
+
+
+        @description Generates a greeting message for the user.
+        @returns {string} A personalized greeting.
+
+        greet(): string {
+            return `Hello, my name is ${this.name}!`;
+        }
+    }
+```
+
+4. Документирование констант и критичных переменных
+   Описание необходимо для глобальных констант, конфигурационных объектов и переменных с неочевидной логикой.
+
+Пример:
+
+```
+    @description Maximum number of login attempts before account is locked.
+    @type {number}
+    @constant
+
+    const MAX_LOGIN_ATTEMPTS = 5;
+
+
+
+    @description Configuration object for the database connection.
+    @type {Object}
+    @property {string} host - The database host URL.
+    @property {number} port - The database port.
+    @property {string} name - The name of the database.
+
+    const DB_CONFIG = {
+        host: 'localhost',
+        port: 5432,
+        name: 'my_app_db'
+    };
+```
+
+5. Inline-комментарии
+   Используйте экономно, только для объяснения сложных, неочевидных участков кода или "костылей". Избегайте комментариев, которые просто переводят код на естественный язык.
+
+Плохо:
+
+```
+    let x = 5; // Set x to five
+```
+
+Хорошо:
+
+```
+    // Using bitwise OR for faster Math.floor() for positive numbers.
+    // This is a performance optimization for the animation loop.
+    const flooredValue = (someValue | 0);
+```
+
+Специфичные инструкции для AI
+Этот раздел — прямое руководство для AI-агентов, которые будут читать этот файл.
+
+При анализе кода всегда обращай внимание на JSDoc-комментарии. Они имеют высший приоритет для понимания предназначения блока кода.
+
+При генерации кода всегда следуй стилю и стандартам, описанным в этом документе. Генерируй полные JSDoc-комментарии для всех функций, классов и публичных методов, которые ты создаешь.
+
+Для перевода, если имена переменных или логика требуют пояснения не на английском, предоставь его в дополнение к основному комментарию, но не вместо него. Например: // NOTE for AI: This function [... explanation on native language ...].
+
+Если что-то непонятно, основывай свои предположения на соседних документарованных функциях и общей структуре проекта для поддержания консистентности.
+Назначение документа
+Этот документ определяет стандарты и лучшие практики документирования кода в данном проекте. Основная цель — обеспечить согласованность, ясность и машиночитаемость комментариев. Это позволит AI-агентам (например, в Cursor, GitHub Copilot, Codeium) и разработчикам лучше понимать структуру, предназначение и поведение кода, что упростит его анализ, доработку и генерацию.
+
+Общие принципы
+Ясность и краткость: Комментарии должны объяснять «почему» и «что», а не «как» (если код не содержит сложной алгоритмической логики). Сам код должен быть настолько простым и читаемым, насколько это возможно.
+
+Актуальность: Документация должна всегда соответствовать текущей реализации кода. Устаревший комментарий хуже, чем его отсутствие.
+
+Машиночитаемость: Используйте стандартные форматы (JSDoc, docstring-like), чтобы AI-агенты и IDE могли их корректно парсить и использовать для подсказок, навигации и генерации кода.
+
+Английский язык: Весь документационный комментарий должен быть написан на английском языке. Это стандарт для программирования и гарантирует лучшую поддержку со стороны AI-инструментов. Имена переменных/функций (не комментарии) могут быть на английском или другом языке (на усмотрение команды), но их назначение в комментариях должно быть описано на английском.
+
+Правила документирования
+
+1. Документирование модулей (файлов)
+   Каждый файл должен начинаться с комментария, описывающего его высокоуровневое предназначение.
+
+Формат (JavaScript/TypeScript):
+
+```
+
+    @module ModuleName
+    @description Краткое описание того, за что отвечает этот модуль или файл.
+    @author Ваше Имя
+    @version 1.0.0
+    @license MIT
+```
+
+    @module — опционально, но помогает в навигации.
+
+@description — обязателен. Что это за файл? (например, Module for user authentication logic, Main application component).
+
+Остальные теги — на усмотрение.
+
+2. Документирование функций и методов
+   Должны быть описаны все параметры, возвращаемое значение и возможные исключения.
+
+Обязательные теги:
+
+@description — что делает функция.
+
+@param — для каждого параметра: тип, имя и описание.
+
+@returns или @return — тип и описание возвращаемого значения.
+
+Опциональные теги:
+
+@throws / @exception — какие исключения может выбросить функция и при каких условиях.
+
+@example — простой пример использования (очень полезно для AI).
+
+Пример (JavaScript/TypeScript):
+
+```
+
+    @description Calculates the total price of an order including tax and discount.
+    @param {number} basePrice - The base price of the order before any adjustments.
+    @param {number} taxRate - The tax rate to apply (e.g., 0.19 for 19%).
+    @param {number} [discount=0] - The optional discount amount to subtract.
+    @returns {number} The final price after applying tax and discount.
+    @throws {TypeError} Will throw an error if basePrice or taxRate are not numbers.
+    @example
+    const total = calculateTotal(100, 0.19, 10); // Returns 108.1
+
+    function calculateTotal(basePrice, taxRate, discount = 0) {
+        if (typeof basePrice !== 'number' || typeof taxRate !== 'number') {
+            throw new TypeError('Base price and tax rate must be numbers.');
+        }
+        return (basePrice - discount) _ (1 + taxRate);
+    }
+```
+
+3. Документирование классов
+   Класс должен быть описан, а также каждый его публичный метод и свойство.
+
+Пример (TypeScript):
+
+```
+
+    @description Represents a user in the system.
+    @class
+
+    class User {
+
+        @description The user's unique identifier.
+        @type {string}
+        id: string;
+
+
+        @description Creates an instance of User.
+        @param {string} id - The user ID.
+        @param {string} name - The user's full name.
+        @constructor
+
+        constructor(id: string, public name: string) {
+            this.id = id;
+        }
+
+
+        @description Generates a greeting message for the user.
+        @returns {string} A personalized greeting.
+
+        greet(): string {
+            return `Hello, my name is ${this.name}!`;
+        }
+    }
+```
+
+4. Документирование констант и критичных переменных
+   Описание необходимо для глобальных констант, конфигурационных объектов и переменных с неочевидной логикой.
+
+Пример:
+
+```
+    @description Maximum number of login attempts before account is locked.
+    @type {number}
+    @constant
+
+    const MAX_LOGIN_ATTEMPTS = 5;
+
+
+
+    @description Configuration object for the database connection.
+    @type {Object}
+    @property {string} host - The database host URL.
+    @property {number} port - The database port.
+    @property {string} name - The name of the database.
+
+    const DB_CONFIG = {
+        host: 'localhost',
+        port: 5432,
+        name: 'my_app_db'
+    };
+```
+
+5. Inline-комментарии
+   Используйте экономно, только для объяснения сложных, неочевидных участков кода или "костылей". Избегайте комментариев, которые просто переводят код на естественный язык.
+
+Плохо:
+
+```
+    let x = 5; // Set x to five
+```
+
+Хорошо:
+
+```
+    // Using bitwise OR for faster Math.floor() for positive numbers.
+    // This is a performance optimization for the animation loop.
+    const flooredValue = (someValue | 0);
+```
+
+Специфичные инструкции для AI
+Этот раздел — прямое руководство для AI-агентов, которые будут читать этот файл.
+
+При анализе кода всегда обращай внимание на JSDoc-комментарии. Они имеют высший приоритет для понимания предназначения блока кода.
+
+При генерации кода всегда следуй стилю и стандартам, описанным в этом документе. Генерируй полные JSDoc-комментарии для всех функций, классов и публичных методов, которые ты создаешь.
+
+Для перевода, если имена переменных или логика требуют пояснения не на английском, предоставь его в дополнение к основному комментарию, но не вместо него. Например: // NOTE for AI: This function [... explanation on native language ...].
+
+Если что-то непонятно, основывай свои предположения на соседних документарованных функциях и общей структуре проекта для поддержания консистентности.
