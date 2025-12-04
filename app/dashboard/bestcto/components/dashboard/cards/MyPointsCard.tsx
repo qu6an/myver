@@ -21,7 +21,7 @@ export default function MyPointsCard({ onNotify }: MyPointsCardProps) {
           <div className="p-2 bg-indigo-100 rounded-lg">
             <BarChart3 className="w-5 h-5 text-indigo-600" />
           </div>
-          <h2 className="text-xl font-bold text-gray-900">Мои баллы</h2>
+          <h2 className="text-xl font-bold text-gray-900">Индивидуальный зачет</h2>
         </div>
         <button
           onClick={() => onNotify("Статистика обновлена")}
@@ -33,9 +33,9 @@ export default function MyPointsCard({ onNotify }: MyPointsCardProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <StatCard value="285" label="Общий рейтинг" gradient="from-blue-500 to-indigo-600" delay={0.1} />
-        <StatCard value="15" label="Место в Москве" gradient="from-purple-500 to-pink-600" delay={0.2} />
-        <StatCard value="87" label="Место в ЦФО" gradient="from-amber-500 to-orange-600" delay={0.3} />
+        <StatCard value="285" label="Место в городе" gradient="from-blue-500 to-indigo-600" delay={0.1} />
+        <StatCard value="15" label="Место в области" gradient="from-purple-500 to-pink-600" delay={0.2} />
+        <StatCard value="87" label="Место в округе" gradient="from-amber-500 to-orange-600" delay={0.3} />
         <StatCard value="3" label="Место в команде" gradient="from-emerald-500 to-teal-600" delay={0.4} />
       </div>
     </motion.div>

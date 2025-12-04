@@ -26,7 +26,7 @@ export default function PartnerCard() {
           className="h-16 mx-auto mb-4"
         />
         <h3 className="text-lg font-bold text-gray-900 mb-2">LYNXauto</h3>
-        <p className="text-sm text-gray-600">Официальный генеральный партнер конкурса "АВТОСЕРВИС ГОДА 2025"</p>
+        <p className="text-sm text-gray-600">Официальный генеральный партнер конкурса "АВТОСЕРВИС ГОДА"</p>
       </div>
     </motion.div>
   )

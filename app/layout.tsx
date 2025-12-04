@@ -44,7 +44,7 @@ export default function RootLayout({
 				/>
 			</head>
 			<body
-				className={`${inter.variable} font-sans antialiased bg-white text-gray-900`}
+				className={`${inter.variable} font-sans antialiased bg-[#e9ecf2] text-gray-900`}
 			>
 				{children}
 				{/* <Analytics /> */}

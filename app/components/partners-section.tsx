@@ -6,7 +6,6 @@ import Image from "next/image"
 const partners = [
   { name: "Arnezi", logo: "https://autocom.parts/i/banners/everycar_partnrs/arnezi.svg" },
   { name: "Azumi", logo: "https://autocom.parts/i/banners/everycar_partnrs/azumi_logo.svg" },
-  { name: "Bardahl", logo: "https://autocom.parts/i/banners/everycar_partnrs/Bardahl.svg" },
   { name: "Febest", logo: "https://autocom.parts/i/banners/everycar_partnrs/Febest.svg" },
   { name: "Ganz", logo: "https://autocom.parts/i/banners/everycar_partnrs/ganz.svg" },
   { name: "HL Mando", logo: "https://autocom.parts/i/banners/everycar_partnrs/hlmando.svg" },
@@ -16,11 +15,23 @@ const partners = [
   { name: "Lavr", logo: "https://autocom.parts/i/banners/everycar_partnrs/lavr.svg" },
   { name: "Lynx", logo: "https://autocom.parts/i/banners/everycar_partnrs/LYNX.svg" },
   { name: "Mecafilter", logo: "https://autocom.parts/i/banners/everycar_partnrs/mecafilter.svg" },
+  { name: "NGN", logo: "https://autocom.parts/i/banners/everycar_partnrs/NGN.svg" },
+  { name: "NSP", logo: "https://autocom.parts/i/banners/everycar_partnrs/nsp.svg" },
+    { name: "NTN", logo: "https://autocom.parts/i/banners/everycar_partnrs/NTN.svg" },
+      { name: "Partra", logo: "https://autocom.parts/i/banners/everycar_partnrs/partra.svg" },
+        { name: "SB", logo: "https://autocom.parts/i/banners/everycar_partnrs/sb.svg" },
+          { name: "SIDEM", logo: "https://autocom.parts/i/banners/everycar_partnrs/sidemlogo.svg" },
+            { name: "NTN", logo: "https://autocom.parts/i/banners/everycar_partnrs/snr.svg" },
+              { name: "SpeedMate", logo: "https://autocom.parts/i/banners/everycar_partnrs/SpeedMate.svg" },
+                { name: "standardSprings", logo: "https://autocom.parts/i/banners/everycar_partnrs/standardS.svg" },
+                  { name: "Sufix", logo: "https://autocom.parts/i/banners/everycar_partnrs/SUFIX.svg" },
+                    { name: "Tixona", logo: "https://autocom.parts/i/banners/everycar_partnrs/Tixona.svg" },
+
 ]
 
 export function PartnersSection() {
   return (
-    <section id="partners" className="py-20 md:py-28 bg-gray-50/50 border-y border-gray-200/50">
+    <section id="partners" className="py-20 md:py-28" style={{ backgroundColor: '#e9ecf2' }}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-12 fade-in">
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-gray-900">Партнеры вашего успеха</h2>
@@ -36,7 +47,7 @@ export function PartnersSection() {
         </div>
 
         <p className="text-center text-gray-500 mt-10 fade-in">
-          Более 23 брендов-партнеров доступны через платформу АВТОКОМ
+          Более 22 брендов-партнеров доступны через платформу АВТОКОМ
         </p>
       </div>
     </section>

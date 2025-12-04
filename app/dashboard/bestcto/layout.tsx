@@ -1,10 +1,13 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import AppWrapper from "../../components/AppWrapper";
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const inter = Inter({
+	subsets: ["latin", "cyrillic"],
+	display: "swap",
+	variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
 	title: "Личный кабинет | АВТОСЕРВИС ГОДА 2025",
@@ -30,16 +33,14 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
+export default function DashboardLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='ru'>
-			<body className={`font-sans antialiased`}>
-				<AppWrapper>{children}</AppWrapper>
-			</body>
-		</html>
+		<>
+			{children}
+		</>
 	);
 }

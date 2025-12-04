@@ -22,32 +22,32 @@ interface PathToVictoryCardProps {
 
 const steps = [
 	{
-		label: "Январь",
-		date: "Тесты 1-2",
+		label: "Январь-Февраль-Март",
+		date: "Подготовка",
 		status: "completed" as const,
 		icon: Check,
 	},
 	{
-		label: "Февраль",
-		date: "Тест 2",
+		label: "Апрель",
+		date: "Тест 1-2",
 		status: "completed" as const,
 		icon: Check,
 	},
 	{
-		label: "Март",
+		label: "Май",
 		date: "Тесты 3-4",
 		status: "current" as const,
 		icon: Play,
 	},
 	{
-		label: "Апрель",
-		date: "22.04 - Регион. финал",
+		label: "Июнь",
+		date: "10-26.06 - Регион. финал",
 		status: "upcoming" as const,
 		icon: Clock,
 	},
 	{
-		label: "Май",
-		date: "28.05 - Финал Москва",
+		label: "Август",
+		date: "21.08 - Финал Москва",
 		status: "upcoming" as const,
 		icon: Flag,
 	},

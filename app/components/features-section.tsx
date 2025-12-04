@@ -5,22 +5,22 @@ import { motion } from "framer-motion"
 
 const features = [
   {
+    icon: TrendingUp,
+    title: "Единая экосистема управления",
+    description:
+      "Все инструменты для развития автосервиса в одной платформе: от мотивации персонала до аналитики KPI. Фокусируйтесь на росте, а не на поиске решений.",
+  },
+  {
     icon: Gamepad2,
     title: "Геймификация и мотивация",
     description:
-      "Викторины, задания, система баллов и наград повышают вовлечённость команды на 35%. Сотрудники видят свой прогресс и получают реальные призы.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Прозрачная аналитика",
-    description:
-      "Полный контроль над закупками, клиентами и KPI. Снижайте издержки до 25% с помощью точных данных и AI-прогнозов.",
+      "Викторины, задания, система баллов и наград повышают вовлечённость команды. Сотрудники видят свой прогресс и получают реальные призы.",
   },
   {
     icon: Users,
-    title: "Участие в проектах EVERYCAR",
+    title: "Эксклюзивные возможности",
     description:
-      "Станьте частью крупнейшего сообщества СТО России. Получайте доступ к эксклюзивным проектам, бонусам и партнёрским условиям.",
+      "Станьте частью крупнейшего сообщества СТО России. Получайте доступ к эксклюзивным проектам, бонусам и профессиональным конкурсам.",
   },
 ]
 
@@ -28,10 +28,12 @@ export function FeaturesSection() {
   return (
     <section id="features" className="py-20 md:py-28">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-extrabold mb-16 text-center text-gray-900 fade-in">
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-center text-gray-900 fade-in">
           Почему выбирают АВТОКОМ
         </h2>
-
+        <p className="text-xl text-center text-gray-600 mb-12 fade-in max-w-2xl mx-auto">
+          Все проекты АВТОКОМ работают вместе для роста вашего бизнеса.
+        </p>
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <FeatureCard key={index} feature={feature} index={index} />

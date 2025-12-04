@@ -11,7 +11,7 @@ export default function StatsCard({ stats }: { stats: Stat[] }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">📊 Мои баллы</h2>
+      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">📊 Индивидуальный зачет</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {stats.map((item, i) => (
           <motion.div key={i} className="p-4 rounded-xl border" whileHover={{ scale: 1.02 }}>

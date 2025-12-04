@@ -20,24 +20,26 @@ export function HeroSection() {
               Для автосервисов • Мотивация • Аналитика
             </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-lg md:text-xl text-gray-600 mb-4 leading-relaxed"
-            >
-              Платформа управления автосервисом с геймификацией, аналитикой, обучением и мотивацией персонала.
-            </motion.p>
+        
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 leading-tight bg-gradient-to-br from-gray-900 via-gray-800 to-blue-600 bg-clip-text text-transparent"
+              className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 leading-tight bg-gradient-to-br from-blue-600 via-purple-60 to-blue-800 bg-clip-text text-transparent"
             >
-              Управляйте автосервисом и участвуйте в проектах АВТОКОМ
-            </motion.h1>
+              
+Единая платформа для развития автосервиса
 
+            </motion.h1>
+  <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-lg md:text-xl text-gray-600 mb-4 leading-relaxed"
+            >
+              Геймификация, обучение персонала и инструменты мотивации. Повышайте выручку и статус вашего СТО через участие в проектах АВТОКОМ.
+            </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -50,14 +52,14 @@ export function HeroSection() {
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </button>
 
-              <button className="flex items-center gap-2 px-6 py-3.5 text-base font-semibold text-gray-700 bg-white/70 backdrop-blur-md border border-gray-200 rounded-xl hover:bg-white hover:-translate-y-0.5 hover:border-blue-600 hover:shadow-lg transition-all duration-200">
+              {/* <button className="flex items-center gap-2 px-6 py-3.5 text-base font-semibold text-gray-700 bg-white/70 backdrop-blur-md border border-gray-200 rounded-xl hover:bg-white hover:-translate-y-0.5 hover:border-blue-600 hover:shadow-lg transition-all duration-200">
                 <TrendingUp className="w-5 h-5" />
                 Посмотреть демо-дашборд
-              </button>
+              </button> */}
             </motion.div>
 
-            {/* Stats */}
-            <motion.div
+            {/* <!-- Stats */}
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -66,7 +68,7 @@ export function HeroSection() {
               <StatCard value="+35%" label="Рост вовлечённости" delay={0.4} />
               <StatCard value="-25%" label="Снижение издержек" delay={0.5} />
               <StatCard value="8000+" label="Автосервисов в сети" delay={0.6} />
-            </motion.div>
+            </motion.div> --> */}
           </div>
 
           {/* Right form */}

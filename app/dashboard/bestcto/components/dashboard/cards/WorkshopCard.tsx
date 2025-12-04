@@ -32,12 +32,12 @@ export default function WorkshopCard({ onNotify }: WorkshopCardProps) {
         </div>
 
         <div>
-          <div className="text-xs font-semibold text-gray-500 mb-2">BOSCH</div>
+          <div className="text-xs font-semibold text-gray-500 mb-2">LAVR</div>
           <h3 className="text-lg font-bold text-gray-900 mb-3">
-            Диагностика электронных систем современных автомобилей
+            Вспомогательные средства для решения ежедневных задач в автосервисе.
           </h3>
           <p className="text-sm text-gray-600 mb-4">
-            Разберитесь со сложными случаями диагностики и научитесь быстро находить неисправности.
+            В прямом эфире мы расскажем о бренде LAVR и обсудим его новости. Ответим на вопросы подписчиков сообщества. Автор самого интересного — получит приз!
           </p>
         </div>
 

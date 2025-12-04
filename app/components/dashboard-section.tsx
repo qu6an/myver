@@ -31,7 +31,7 @@ export function DashboardSection() {
     <section id="dashboard" className="py-20 md:py-28">
       <div className="container mx-auto px-6">
         <div className="mb-12 fade-in">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-5 text-gray-900">Дашборд — единая точка контроля</h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-5 text-gray-900">Личный кабинет — единая точка контроля</h2>
           <p className="text-lg text-gray-600">Вся аналитика, проекты и мотивация команды в одном интерфейсе</p>
         </div>
 
@@ -49,32 +49,32 @@ export function DashboardSection() {
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white/70 backdrop-blur-xl border border-gray-200/80 rounded-3xl p-8 md:p-10 shadow-lg"
-        >
-          <h3 className="text-xl font-bold mb-6 text-gray-900">Короткий тур по демо (15 секунд)</h3>
+         {/* <motion.div
+         initial={{ opacity: 0, y: 30 }}
+         whileInView={{ opacity: 1, y: 0 }}
+         viewport={{ once: true }}
+         transition={{ duration: 0.6, delay: 0.2 }}
+         className="bg-white/70 backdrop-blur-xl border border-gray-20/80 rounded-3xl p-8 md:p-10 shadow-lg"
+       >
+         <h3 className="text-xl font-bold mb-6 text-gray-90">Короткий тур по демо (15 секунд)</h3>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            {["Ваши ключевые метрики", "Задачи и активные рассылки", "Рейтинг команды и проекты"].map((step, index) => (
-              <div key={index} className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold flex-shrink-0">
-                  {index + 1}
-                </div>
-                <div className="text-gray-600 text-sm">{step}</div>
-              </div>
-            ))}
-          </div>
+       <div className="grid md:grid-cols-3 gap-6 mb-8">
+           {["Ваши ключевые метрики", "Задачи и активные рассылки", "Рейтинг команды и проекты"].map((step, index) => (
+             <div key={index} className="flex items-center gap-3">
+               <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold flex-shrink-0">
+                 {index + 1}
+               </div>
+               <div className="text-gray-600 text-sm">{step}</div>
+             </div>
+           ))}
+         </div>
 
-          <button className="flex items-center gap-2 px-6 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-500 rounded-xl hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-200">
-            <Play className="w-5 h-5" />
-            Открыть демо
-          </button>
-        </motion.div>
-      </div>
+         <button className="flex items-center gap-2 px-6 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-500 rounded-xl hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-200">
+           <Play className="w-5 h-5" />
+           Открыть демо
+         </button>
+       </motion.div> */}
+      </div> 
     </section>
   )
 }

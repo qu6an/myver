@@ -45,7 +45,7 @@ export function Header() {
           <nav className="hidden md:flex items-center gap-8">
             <NavLink href="#features">Преимущества</NavLink>
             <NavLink href="#projects">Проекты</NavLink>
-            <NavLink href="#dashboard">Дашборд</NavLink>
+            <NavLink href="#dashboard">Личный кабинет</NavLink>
           </nav>
 
           <div className="flex items-center gap-3">

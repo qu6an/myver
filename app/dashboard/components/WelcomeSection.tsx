@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useNotificationContext } from './NotificationProvider';
+import { useNotificationContext } from '.components/NotificationProvider';
 
 interface PointsCompactProps {
   points: number;
@@ -175,7 +175,7 @@ const WelcomeSection: React.FC<WelcomeSectionProps> = ({
           
           <div className="welcome-stats-container flex-wrap gap-5">
             <PointsCompact points={points} />
-            {/* <GlobalLevel level={level} currentXp={currentXp} requiredXp={requiredXp} /> */}
+            <GlobalLevel level={level} currentXp={currentXp} requiredXp={requiredXp} />
           </div>
         </div>
         

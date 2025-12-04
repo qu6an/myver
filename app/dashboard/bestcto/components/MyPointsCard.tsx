@@ -22,7 +22,7 @@ export default function MyPointsCard({ onNotify }: MyPointsCardProps) {
           <div className="p-2 bg-indigo-100 rounded-lg">
             <BarChart3 className="w-5 h-5 text-indigo-600" />
           </div>
-          <h2 className="text-xl font-bold text-gray-900">Мои баллы</h2>
+          <h2 className="text-xl font-bold text-gray-900">Индивидуальный зачет</h2>
         </div>
         <button
           onClick={() => onNotify("Статистика обновлена")}

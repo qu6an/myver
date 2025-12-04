@@ -39,8 +39,8 @@ export default function App() {
 	];
 
 	const stats = [
-		{ label: "Общий рейтинг", value: 285 },
-		{ label: "Место в Москве", value: 15 },
+		{ label: "Место в Москве", value: 285 },
+		{ label: "Место в области", value: 15 },
 		{ label: "Место в ЦФО", value: 87 },
 	];
 
@@ -183,7 +183,7 @@ export default function App() {
 										<div className='text-sm text-slate-500'>
 											Официальный генеральный партнер
 											конкурса АВТОСЕРВИС &#34;ГОДА
-											2025&#34;
+											2026&#34;
 										</div>
 									</div>
 								</div>

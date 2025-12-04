@@ -8,7 +8,7 @@ import { ProjectsSection } from "./components/projects-section";
 import { FeaturesSection } from "./components/features-section";
 import { PartnersSection } from "./components/partners-section";
 import { DashboardSection } from "./components/dashboard-section";
-import { SpecialOfferSection } from "./components/special-offer-section";
+// import { SpecialOfferSection } from "./components/special-offer-section";
 import { ExperienceSection } from "./components/experience-section";
 import { FAQSection } from "./components/faq-section";
 import { Footer } from "./components/footer";
@@ -45,8 +45,8 @@ export default function HomePage() {
 				<FeaturesSection />
 				<PartnersSection />
 				<DashboardSection />
-				<SpecialOfferSection />
-				<ExperienceSection />
+				{/* <SpecialOfferSection /> */}
+				{/* <ExperienceSection /> */}
 				<FAQSection />
 			</main>
 			<Footer />

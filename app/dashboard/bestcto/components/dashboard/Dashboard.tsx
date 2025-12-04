@@ -13,6 +13,7 @@ import MotivationCard from "./cards/MotivationCard";
 import QuizCard from "./cards/QuizCard";
 import CertificationCard from "./cards/CertificationCard";
 import TeamRankingCard from "../TeamRankingCard";
+import RankingTable from "../RankingTable";
 
 export default function Dashboard() {
 	const [notification, setNotification] = useState<{
@@ -30,6 +31,19 @@ export default function Dashboard() {
 			3000
 		);
 	};
+
+	const rankingRows = [
+		{ position: 1, name: 'Иванов Сергей', autoservice: 'АвтоМир', city: 'Москва', score: 415, progress: 100 },
+		{ position: 2, name: 'Петрова Анна', autoservice: 'ТехноСервис', city: 'Москва', score: 390, progress: 94 },
+		{ position: 3, name: 'Смирнов Дмитрий', autoservice: 'СервисПлюс', city: 'Москва', score: 375, progress: 90 },
+		{ position: 4, name: 'Волков Алексей', autoservice: 'Вилгуд', city: 'Москва', score: 360, progress: 87, isCurrentUser: true },
+		{ position: 5, name: 'Кузнецов Игорь', autoservice: 'АвтоМастер', city: 'Москва', score: 345, progress: 83 },
+		{ position: 6, name: 'Михайлова Ольга', autoservice: 'ПрофиСервис', city: 'Москва', score: 330, progress: 80 },
+		{ position: 7, name: 'Попов Андрей', autoservice: 'МоторСити', city: 'Москва', score: 315, progress: 76 },
+		{ position: 8, name: 'Соколова Елена', autoservice: 'АвтоСфера', city: 'Москва', score: 30, progress: 72 },
+		{ position: 9, name: 'Лебедев Михаил', autoservice: 'СервисГрупп', city: 'Москва', score: 290, progress: 70 },
+		{ position: 10, name: 'Ковалева Татьяна', autoservice: 'АвтоДок', city: 'Москва', score: 280, progress: 67 },
+	];
 
 	return (
 		<div className='main-content flex-1 ml-0  transition-all duration-300'>
@@ -61,6 +75,16 @@ export default function Dashboard() {
 						<MotivationCard onNotify={showNotification} />
 						<QuizCard onNotify={showNotification} />
 					</div>
+				</motion.div>
+
+				{/* Ranking Section */}
+				<motion.div
+					className='mt-6'
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ delay: 0.4 }}
+				>
+					<RankingTable rows={rankingRows} />
 				</motion.div>
 
 				{/* Full Width Cards */}
